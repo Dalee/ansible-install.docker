@@ -1,0 +1,3 @@
+# Docker installation
+- include: docker-engine.yml
+- include: docker-compose.yml

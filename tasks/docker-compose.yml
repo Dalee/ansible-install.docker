@@ -1,0 +1,18 @@
+#
+# Install docker-compose
+#
+- name: docker-compose - target path
+  set_fact:
+    docker_compose_path: "/usr/local/bin/docker-compose"
+
+- name: docker-compose - check installed
+  stat:
+    path: "{{ docker_compose_path }}"
+  register: docker_compose_path_bin
+
+- name: docker-compose - download
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.6.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: "/usr/local/bin/docker-compose"
+    mode: 0755
+  when: not docker_compose_path_bin.stat.exists
