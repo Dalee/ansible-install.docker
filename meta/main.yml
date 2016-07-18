@@ -1,0 +1,12 @@
+galaxy_info:
+  author: "Dalee Dev"
+  company: Dalee
+  license: BSD
+  min_ansible_version: 1.4
+  platforms:
+   - name: Debian
+     versions:
+      - jessie
+  categories:
+   - system
+dependencies: []
