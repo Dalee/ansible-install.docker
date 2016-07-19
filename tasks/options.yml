@@ -1,0 +1,36 @@
+# setup systemd configuration file
+- name: docker - check options file (systemd)
+  stat:
+    path: "/lib/systemd/system/docker.service"
+  register: systemd_file
+
+- name: docker - setup options (systemd)
+  template:
+    src: "docker.systemd.j2"
+    dest: "/lib/systemd/system/docker.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  when: systemd_file.stat.exists
+
+# setup upstart configuration file
+- name: docker - check options file (upstart)
+  stat:
+    path: "/etc/default/docker"
+  register: upstart_file
+
+- name: docker - setup options (upstart)
+  template:
+    src: "docker.upstart.j2"
+    dest: "/etc/default/docker"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  when: upstart_file.stat.exists
+
+# restart docker
+- name: docker - forced restart
+  service:
+    name: "docker"
+    state: "restarted"
+    enabled: "yes"

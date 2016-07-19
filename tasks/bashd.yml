@@ -1,0 +1,12 @@
+#
+- name: docker - check bash.d directory exists
+  file:
+    path: "/etc/bash.d/docker"
+    state: "directory"
+    mode: 0644
+
+- name: docker - put profile environment
+  template:
+    src: "docker.rc"
+    dest: "/etc/bash.d/docker"
+    mode: 0644

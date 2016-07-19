@@ -1,18 +1,17 @@
 #
 # Install docker-compose
+# @see https://github.com/docker/compose/releases/latest
 #
-- name: docker-compose - target path
-  set_fact:
-    docker_compose_path: "/usr/local/bin/docker-compose"
-
 - name: docker-compose - check installed
   stat:
-    path: "{{ docker_compose_path }}"
+    path: "{{ docker_compose.target_path }}"
   register: docker_compose_path_bin
 
 - name: docker-compose - download
   get_url:
-    url: "https://github.com/docker/compose/releases/download/1.6.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
-    dest: "/usr/local/bin/docker-compose"
+    url: "{{ docker_compose.release }}"
+    dest: "{{ docker_compose.target_path }}"
+    owner: "root"
+    group: "root"
     mode: 0755
   when: not docker_compose_path_bin.stat.exists
