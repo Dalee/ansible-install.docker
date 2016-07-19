@@ -2,12 +2,15 @@ galaxy_info:
   author: "Dalee Dev"
   company: Dalee
   license: BSD
-  description: "Docker and docker compose installation role"
+  description: "Docker and docker-compose installation role"
   min_ansible_version: 1.4
   platforms:
    - name: Debian
      versions:
       - jessie
+   - name: Ubuntu
+     versions:
+      - trusty
   categories:
    - system
 dependencies: []
