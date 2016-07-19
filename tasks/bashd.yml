@@ -1,12 +1,16 @@
 #
 - name: docker - check bash.d directory exists
   file:
-    path: "/etc/bash.d/docker"
+    path: "/etc/bash.d"
     state: "directory"
-    mode: 0644
+    mode: 0755
+    owner: "root"
+    group: "root"
 
 - name: docker - put profile environment
   template:
     src: "docker.rc"
-    dest: "/etc/bash.d/docker"
+    dest: "/etc/bash.d/docker.rc"
     mode: 0644
+    owner: "root"
+    group: "root"
