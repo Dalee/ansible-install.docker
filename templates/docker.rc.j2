@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+# allow sudoless connection to docker
+export DOCKER_HOST="{{ docker.listen_addr }}"
+
+# emulate jenkins
+export WORKSPACE="{{ project_root }}"
+export JOB_BASE_NAME="project"
+export BUILD_NUMBER="1"

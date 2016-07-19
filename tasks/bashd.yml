@@ -9,7 +9,7 @@
 
 - name: docker - put profile environment
   template:
-    src: "docker.rc"
+    src: "docker.rc.j2"
     dest: "/etc/bash.d/docker.rc"
     mode: 0644
     owner: "root"

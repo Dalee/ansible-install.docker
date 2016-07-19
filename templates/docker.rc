@@ -1,2 +1,0 @@
-# {{ ansible_managed }}
-export DOCKER_HOST="{{ docker.listen_addr }}"
