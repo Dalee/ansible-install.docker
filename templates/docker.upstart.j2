@@ -1,2 +1,9 @@
 # {{ ansible_managed }}
-DOCKER_OPTS="-H {{ docker.listen_addr }} -H {{ docker.listen_sock }}"
+
+{% set listen = ["-H " + docker.listen_addr, "-H " + docker.listen_sock]|join(' ') %}
+{% set registry = "" %}
+{% if docker_insecure_registry is defined %}
+{% set registry = "--insecure-registry " + docker_insecure_registry %}
+{% endif %}
+
+DOCKER_OPTS="{{ registry }} {{ listen }}"

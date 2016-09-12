@@ -1,4 +1,11 @@
 # {{ ansible_managed }}
+
+{% set listen = ["-H " + docker.listen_addr, "-H " + docker.listen_sock, "-H fd://"]|join(' ') %}
+{% set registry = "" %}
+{% if docker_insecure_registry is defined %}
+{% set registry = "--insecure-registry " + docker_insecure_registry %}
+{% endif %}
+
 [Unit]
 Description=Docker Application Container Engine
 Documentation=https://docs.docker.com
@@ -7,10 +14,7 @@ Requires=docker.socket
 
 [Service]
 Type=notify
-# the default is not to use systemd for cgroups because the delegate issues still
-# exists and systemd currently does not support the cgroup feature set required
-# for containers run by docker
-ExecStart=/usr/bin/docker daemon -H {{ docker.listen_addr }} -H "{{ docker.listen_sock }}" -H fd://
+ExecStart=/usr/bin/docker daemon {{ registry }} {{ listen }}
 MountFlags=slave
 LimitNOFILE=1048576
 LimitNPROC=1048576
