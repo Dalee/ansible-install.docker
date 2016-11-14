@@ -5,5 +5,10 @@ export DOCKER_HOST="{{ docker.listen_addr }}"
 
 # emulate jenkins
 export WORKSPACE="{{ project_root }}"
+
+# JOB_BASE_NAME deprecated
 export JOB_BASE_NAME="{{ project_name }}"
+
+# build name and number
+export BUILD_NAME="{{ project_name }}"
 export BUILD_NUMBER="1"
