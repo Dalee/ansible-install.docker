@@ -1,5 +1,4 @@
 #
-# @see https://docs.docker.com/engine/installation/linux/debian/
 # @see https://docs.docker.com/engine/installation/linux/ubuntulinux/
 #
 - name: docker - install https support for apt
@@ -12,8 +11,10 @@
 
 - name: docker - add repository
   apt_repository:
-    repo: "deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main"
+    repo: "{{ item }}"
     update_cache: yes
+  with_items:
+    - "deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main"
 
 - name: docker - install
   apt:

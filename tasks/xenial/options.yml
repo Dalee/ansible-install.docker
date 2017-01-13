@@ -1,0 +1,15 @@
+#
+- name: docker - ensure systemd overrides directory exists
+  file:
+    path: "/etc/systemd/system/docker.service.d"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: docker - install systemd overrides
+  template:
+    src: "xenial/systemd.options.conf.j2"
+    dest: "/etc/systemd/system/docker.service.d/options.conf"
+    owner: "root"
+    group: "root"
