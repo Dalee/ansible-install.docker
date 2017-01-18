@@ -1,12 +1,13 @@
-#
 # @see https://docs.docker.com/engine/installation/linux/ubuntulinux/
 #
 - name: docker - install https support for apt
-  apt: name=apt-transport-https
+  apt:
+    name: "apt-transport-https"
+    state: "present"
 
 - name: docker - add repository key
   apt_key:
-    keyserver: pgp.mit.edu
+    keyserver: hkp://ha.pool.sks-keyservers.net:80
     id: 58118E89F3A912897C070ADBF76221572C52609D
 
 - name: docker - add repository
@@ -18,5 +19,5 @@
 
 - name: docker - install
   apt:
-    name: docker-engine
+    name: "docker-engine"
     state: "present"

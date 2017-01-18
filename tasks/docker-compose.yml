@@ -1,5 +1,3 @@
-#
-# Install docker-compose
 # @see https://github.com/docker/compose/releases/latest
 #
 - name: docker-compose - check installed

@@ -5,5 +5,5 @@ docker:
   listen_sock: "unix:///var/run/docker.sock"
 
 docker_compose:
-  release: "https://github.com/docker/compose/releases/download/1.7.1/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+  release: "https://github.com/docker/compose/releases/download/1.10.0/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
   target_path: "/usr/local/bin/docker-compose"
