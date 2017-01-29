@@ -1,9 +1,4 @@
 # @see https://docs.docker.com/engine/installation/linux/ubuntulinux/
-#
-- name: docker - install https support for apt
-  apt:
-    name: "apt-transport-https"
-    state: "present"
 
 - name: docker - add repository key
   apt_key:
@@ -15,7 +10,7 @@
     repo: "{{ item }}"
     update_cache: yes
   with_items:
-    - "deb https://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main"
+    - "deb http://apt.dockerproject.org/repo {{ ansible_distribution|lower }}-{{ ansible_distribution_release }} main"
 
 - name: docker - install
   apt:
