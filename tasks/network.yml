@@ -1,0 +1,26 @@
+# setup another bridge for docker
+- name: docker - install bridge-utils
+  apt:
+    name: bridge-utils
+    state: "present"
+
+- name: docker - stop if running
+  failed_when: False
+  service:
+    name: "docker"
+    state: "stopped"
+
+- name: docker - remove docker0 interface
+  failed_when: False
+  shell: "{{ item }}"
+  with_items:
+    - "ip link set dev docker0 down"
+    - "brctl delbr docker0"
+    - "iptables -t nat -F POSTROUTING"
+
+- name: docker - setup bridge
+  shell: "{{ item }}"
+  with_items:
+    - "brctl addbr {{ docker.iface }}"
+    - "ip addr add {{ docker.address }}/{{ docker.netmask }} dev {{ docker.iface }}"
+    - "ip link set dev {{ docker.iface }} up"

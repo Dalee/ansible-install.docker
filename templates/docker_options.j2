@@ -6,4 +6,4 @@
 {% set registry = "--insecure-registry " + docker_insecure_registry %}
 {% endif %}
 
-DOCKER_OPTS="{{ registry }} {{ listen }}"
+DOCKER_OPTS="-b={{ docker.iface }} {{ registry }} {{ listen }}"

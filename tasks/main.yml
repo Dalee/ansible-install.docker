@@ -1,4 +1,5 @@
-# Docker installation
+#
+- include: network.yml
 - include: docker-engine.yml
 - include: docker-compose.yml
 - include: options.yml
