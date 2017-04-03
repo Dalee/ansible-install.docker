@@ -18,9 +18,15 @@
     - "brctl delbr docker0"
     - "iptables -t nat -F POSTROUTING"
 
-- name: docker - setup bridge
+- name: docker - check docker target interface exists
+  failed_when: False
+  shell: "brctl showstp {{ docker.iface }}"
+  register: docker_brctl_showstp
+
+- name: docker - setup docker target interface
   shell: "{{ item }}"
   with_items:
     - "brctl addbr {{ docker.iface }}"
     - "ip addr add {{ docker.address }}/{{ docker.netmask }} dev {{ docker.iface }}"
     - "ip link set dev {{ docker.iface }} up"
+  when: docker_brctl_showstp.rc != 0
