@@ -1,25 +1,29 @@
 #
-- name: docker - setup options
+- name: docker - ensure systemd overrides directory exists
+  file:
+    path: "/etc/systemd/system/docker.service.d"
+    state: "directory"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: docker - install systemd overrides
+  template:
+    src: "systemd.options.conf.j2"
+    dest: "/etc/systemd/system/docker.service.d/options.conf"
+    owner: "root"
+    group: "root"
+
+- name: docker - install options
   template:
     src: "docker_options.j2"
     dest: "/etc/default/docker"
     owner: "root"
     group: "root"
-    mode: 0644
 
-- include: "xenial/options.yml"
-  when: ansible_distribution_release == "xenial"
-
-- name: docker - restart docker (trusty, forced)
-  service:
-    name: "docker"
-    state: "restarted"
-  when: ansible_distribution_release == "trusty"
-
-- name: docker - restart docker (xenial, forced)
+- name: docker - reload systemd
   systemd:
     name: "docker"
-    state: "restarted"
-    daemon_reload: "yes"
-    enabled: "yes"
-  when: ansible_distribution_release == "xenial"
+    state: "stopped"
+    enabled: no
+    daemon_reload: yes

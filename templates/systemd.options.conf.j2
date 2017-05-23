@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+
+[Service]
+# initialization
+# remove docker0 and create {{ docker.iface }}
+ExecStartPre=-/sbin/ip link set dev docker0 down
+ExecStartPre=-/sbin/brctl delbr docker0
+ExecStartPre=-/sbin/iptables -t nat -F POSTROUTING
+ExecStartPre=-/sbin/brctl addbr {{ docker.iface }}
+ExecStartPre=-/sbin/ip addr add {{ docker.address }}/{{ docker.netmask }} dev {{ docker.iface }}
+ExecStartPre=-/sbin/ip link set dev {{ docker.iface }} up
+
+# start service
+ExecStart=
+EnvironmentFile=-/etc/default/docker
+ExecStart=/usr/bin/dockerd $DOCKER_OPTS
+
+# cleanup
+# remove {{ docker.iface }}
+ExecStopPost=/sbin/ip link set dev {{ docker.iface }} down
+ExecStopPost=/sbin/brctl delbr {{ docker.iface }}
+ExecStopPost=/sbin/iptables -t nat -F POSTROUTING
