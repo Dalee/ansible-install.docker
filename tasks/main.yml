@@ -1,6 +1,6 @@
 #
-- include: network.yml
 - include: docker-engine.yml
+- include: network.yml
 - include: docker-compose.yml
 - include: options.yml
 - include: bashd.yml
